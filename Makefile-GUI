@@ -1,0 +1,190 @@
+# Makefile for MacinTouch
+# macOS SwiftUI Application with menu bar interface
+
+# Configuration
+APP_NAME = MacinTouch
+BUNDLE_ID = com.macintouch.driver
+VERSION = 1.0.0
+
+# Directories
+GUI_DIR = MacinTouchApp
+BUILD_DIR = build
+APP_DIR = $(BUILD_DIR)/$(APP_NAME).app
+CONTENTS_DIR = $(APP_DIR)/Contents
+MACOS_DIR = $(CONTENTS_DIR)/MacOS
+RESOURCES_DIR = $(CONTENTS_DIR)/Resources
+
+# Source files
+SWIFT_SOURCES = $(shell find $(GUI_DIR) -name "*.swift")
+TOUCHDRIVER_SOURCES = $(shell find MacinTouch -name "*.swift" ! -name "main.swift")
+C_SOURCES = MacinTouch/HIDSetup.c MacinTouch/DockSwipe.c
+C_OBJECTS = $(patsubst MacinTouch/%.c,$(BUILD_DIR)/%.o,$(C_SOURCES))
+
+# Compiler flags
+SWIFT_FLAGS = -O -target arm64-apple-macos13.0
+DEBUG_SWIFT_FLAGS = -g -target arm64-apple-macos13.0
+C_FLAGS = -O2 -Wall -arch arm64 -framework IOKit -framework CoreFoundation
+DEBUG_C_FLAGS = -g -Wall -arch arm64 -framework IOKit -framework CoreFoundation
+
+# Default target
+.PHONY: all
+all: gui-release
+
+# Build debug GUI version
+.PHONY: gui-debug
+gui-debug:
+	@echo "🔨 Building MacinTouch (Debug)..."
+	@mkdir -p $(BUILD_DIR)
+	@mkdir -p $(APP_DIR)
+	@mkdir -p $(CONTENTS_DIR)
+	@mkdir -p $(MACOS_DIR)
+	@mkdir -p $(RESOURCES_DIR)
+	
+	# Compile C sources
+	@echo "📦 Compiling HID interface..."
+	@for src in $(C_SOURCES); do clang $(DEBUG_C_FLAGS) -c $$src -o $(BUILD_DIR)/$$(basename $$src .c).o || exit $$?; done
+	
+	# Compile Swift sources
+	@echo "📱 Compiling SwiftUI application..."
+	@swiftc $(DEBUG_SWIFT_FLAGS) \
+		-import-objc-header MacinTouch/MacinTouch-Bridging-Header.h \
+		-I MacinTouch \
+		-framework SwiftUI \
+		-framework AppKit \
+		-framework IOKit \
+		-framework CoreGraphics \
+		-framework ServiceManagement \
+		$(SWIFT_SOURCES) $(TOUCHDRIVER_SOURCES) $(C_OBJECTS) \
+		-o $(MACOS_DIR)/$(APP_NAME)
+	
+	# Create Info.plist
+	@cp $(GUI_DIR)/Info.plist $(CONTENTS_DIR)/Info.plist
+
+	# Copy app icon
+	@cp $(GUI_DIR)/Resources/AppIcon.icns $(RESOURCES_DIR)/AppIcon.icns
+
+	# Create PkgInfo
+	@echo "APPL????" > $(CONTENTS_DIR)/PkgInfo
+
+	# Ad-hoc code sign (stabilizes TCC permission across rebuilds)
+	@codesign --force --sign - $(APP_DIR)
+
+	@echo "✅ GUI Debug build complete: $(APP_DIR)"
+
+# Build release GUI version
+.PHONY: gui-release
+gui-release:
+	@echo "🔨 Building MacinTouch (Release)..."
+	@mkdir -p $(BUILD_DIR)
+	@mkdir -p $(APP_DIR)
+	@mkdir -p $(CONTENTS_DIR)
+	@mkdir -p $(MACOS_DIR)
+	@mkdir -p $(RESOURCES_DIR)
+
+	# Compile C sources
+	@echo "📦 Compiling HID interface..."
+	@for src in $(C_SOURCES); do clang $(C_FLAGS) -c $$src -o $(BUILD_DIR)/$$(basename $$src .c).o || exit $$?; done
+
+	# Compile Swift sources
+	@echo "📱 Compiling SwiftUI application..."
+	@swiftc $(SWIFT_FLAGS) \
+		-import-objc-header MacinTouch/MacinTouch-Bridging-Header.h \
+		-I MacinTouch \
+		-framework SwiftUI \
+		-framework AppKit \
+		-framework IOKit \
+		-framework CoreGraphics \
+		-framework ServiceManagement \
+		$(SWIFT_SOURCES) $(TOUCHDRIVER_SOURCES) $(C_OBJECTS) \
+		-o $(MACOS_DIR)/$(APP_NAME)
+
+	# Create Info.plist
+	@cp $(GUI_DIR)/Info.plist $(CONTENTS_DIR)/Info.plist
+
+	# Copy app icon
+	@cp $(GUI_DIR)/Resources/AppIcon.icns $(RESOURCES_DIR)/AppIcon.icns
+
+	# Create PkgInfo
+	@echo "APPL????" > $(CONTENTS_DIR)/PkgInfo
+
+	# Ad-hoc code sign (stabilizes TCC permission across rebuilds)
+	@codesign --force --sign - $(APP_DIR)
+
+	@echo "✅ GUI Release build complete: $(APP_DIR)"
+
+# Run GUI debug version
+.PHONY: gui-run-debug
+gui-run-debug: gui-debug
+	@echo "🚀 Running MacinTouch (Debug)..."
+	@open $(APP_DIR)
+
+# Run GUI release version
+.PHONY: gui-run
+gui-run: gui-release
+	@echo "🚀 Running MacinTouch (Release)..."
+	@open $(APP_DIR)
+
+# Install GUI app to Applications folder
+.PHONY: gui-install
+gui-install: gui-release
+	@echo "📦 Installing MacinTouch..."
+	@sudo rm -rf /Applications/$(APP_NAME).app
+	@sudo cp -R $(APP_DIR) /Applications/
+	@sudo codesign --force --sign - /Applications/$(APP_NAME).app
+	@echo "✅ Installed to /Applications/$(APP_NAME).app"
+
+# Uninstall GUI app
+.PHONY: gui-uninstall
+gui-uninstall:
+	@echo "🗑️  Uninstalling MacinTouch..."
+	@sudo rm -rf /Applications/$(APP_NAME).app
+	@echo "✅ Uninstalled from /Applications/"
+
+# Clean GUI build artifacts
+.PHONY: gui-clean
+gui-clean:
+	@echo "🧹 Cleaning GUI build artifacts..."
+	@rm -rf $(BUILD_DIR)
+	@echo "✅ GUI build artifacts cleaned"
+
+# Check GUI build requirements
+.PHONY: gui-check
+gui-check:
+	@echo "🔍 Checking GUI build requirements..."
+	@which swiftc > /dev/null || (echo "❌ Swift compiler not found" && exit 1)
+	@which clang > /dev/null || (echo "❌ Clang compiler not found" && exit 1)
+	@echo "✅ All GUI build requirements satisfied"
+
+# Show GUI build info
+.PHONY: gui-info
+gui-info:
+	@echo "📱 MacinTouch Build Information"
+	@echo "App Name: $(APP_NAME)"
+	@echo "Bundle ID: $(BUNDLE_ID)" 
+	@echo "Version: $(VERSION)"
+	@echo "Build Directory: $(BUILD_DIR)"
+	@echo "Swift Sources: $(words $(SWIFT_SOURCES)) files"
+	@echo "MacinTouch Sources: $(words $(TOUCHDRIVER_SOURCES)) files"
+
+# Help for GUI targets
+.PHONY: gui-help
+gui-help:
+	@echo "📱 MacinTouch Build Targets:"
+	@echo ""
+	@echo "Build Commands:"
+	@echo "  gui-debug       Build debug version of GUI app"
+	@echo "  gui-release     Build release version of GUI app"
+	@echo ""
+	@echo "Run Commands:"
+	@echo "  gui-run-debug   Build and run debug GUI app"
+	@echo "  gui-run         Build and run release GUI app"
+	@echo ""
+	@echo "Install Commands:"
+	@echo "  gui-install     Install GUI app to /Applications"
+	@echo "  gui-uninstall   Remove GUI app from /Applications"
+	@echo ""
+	@echo "Utility Commands:"
+	@echo "  gui-clean       Clean GUI build artifacts"
+	@echo "  gui-check       Check GUI build requirements"
+	@echo "  gui-info        Show GUI build information"
+	@echo "  gui-help        Show this help message"

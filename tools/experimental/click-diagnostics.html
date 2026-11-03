@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MacinTouch · 点击检测</title>
+<style>
+  :root{font-family:system-ui,-apple-system,"PingFang SC",sans-serif;color:#172333;background:#edf2f7;font-size:14px}
+  *{box-sizing:border-box}body{margin:0;padding:28px}main{max-width:1160px;margin:auto}
+  h1{margin:0;font-size:26px;letter-spacing:-.6px}p{line-height:1.7;color:#576579;margin:10px 0 18px}
+  .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.actions{display:flex;gap:8px;flex-wrap:wrap}
+  button{border:1px solid #ccd5e0;border-radius:8px;background:white;padding:9px 13px;color:#24364e;cursor:pointer;font:inherit}
+  button.primary{background:#2459d3;color:white;border-color:#2459d3}button:hover{filter:brightness(.97)}button:focus-visible{outline:3px solid #9bb8ff}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.card{background:white;border:1px solid #dce3ed;border-radius:12px;padding:16px}
+  .label{font-size:12px;color:#637188}.value{font-size:28px;font-weight:650;margin-top:5px;font-variant-numeric:tabular-nums}
+  .grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,1fr);gap:16px}
+  .target{position:relative;min-height:330px;display:flex;align-items:center;justify-content:center;background:white;border:2px solid #8baae9;border-radius:14px;overflow:hidden;user-select:none;-webkit-user-select:none;cursor:crosshair}
+  .target:before,.target:after{content:"";position:absolute;background:#e7edf8;pointer-events:none}.target:before{height:1px;width:100%;top:50%}.target:after{width:1px;height:100%;left:50%}
+  .target-content{z-index:1;text-align:center;padding:20px;background:#ffffffdc;pointer-events:none}.target-content strong{display:block;font-size:23px;margin-bottom:12px}.target-content small{font-size:13px;color:#637188;line-height:1.8}
+  .dot{position:absolute;border:2px solid #e67727;border-radius:50%;width:18px;height:18px;transform:translate(-50%,-50%);pointer-events:none;background:#ffb76b33;z-index:2}
+  .dot.up{border-color:#3c71dd;background:#698bf133}.summary{margin:0 0 14px;padding:12px;border-radius:9px;background:#f0f4fa;line-height:1.6;min-height:64px}.summary.success{color:#146443;background:#e9f8f0}
+  dl{display:grid;grid-template-columns:110px 1fr;gap:10px;margin:12px 0;font-size:13px}dt{color:#637188}dd{margin:0;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+  .notice{font-size:12px;line-height:1.7;color:#637188;margin:14px 0 0}.log{margin-top:20px;background:white;border:1px solid #dce3ed;border-radius:12px;overflow:hidden}
+  .log-head{padding:14px 16px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.log-head label{color:#637188;font-size:12px}.table-wrap{max-height:360px;overflow:auto}
+  table{border-collapse:collapse;width:100%;font:12px ui-monospace,SFMono-Regular,Consolas,monospace;white-space:nowrap}th{position:sticky;top:0;background:#f5f7fb;color:#637188;font-weight:500}td,th{padding:9px 12px;border-top:1px solid #edf0f5;text-align:left}tr.double td{color:#146443;background:#effaf4}tr.move td{color:#8c98a8}
+  #status{font-size:12px;color:#637188;min-height:20px;margin-top:10px}#empty{padding:24px;color:#8793a6;text-align:center}.mono{font-family:ui-monospace,SFMono-Regular,monospace}
+  @media(max-width:760px){body{padding:16px}.grid{grid-template-columns:1fr}.cards{gap:7px}.card{padding:10px}.value{font-size:23px}.target{min-height:280px}}
+</style>
+<main>
+  <div class="top"><h1>MacinTouch · 点击检测</h1><div class="actions"><button id="clear">清空重新测试</button><button id="copy">复制日志</button><button id="download" class="primary">下载日志 JSON</button></div></div>
+  <p>在下方区域按平时的方式单击、双击。页面只观察浏览器收到的事件，不移动指针，不拦截点击，不打开图片。</p>
+  <div class="cards"><div class="card"><div class="label">按下 mousedown</div><div id="downCount" class="value">0</div></div><div class="card"><div class="label">抬起 mouseup</div><div id="upCount" class="value">0</div></div><div class="card"><div class="label">点击 click</div><div id="clickCount" class="value">0</div></div><div class="card"><div class="label">双击 dblclick</div><div id="doubleCount" class="value">0</div></div></div>
+  <div class="grid">
+    <div id="target" class="target" data-test-area="main"><div class="target-content"><strong>在这里点击或双击</strong><small>橙圈 = 按下位置　蓝圈 = 抬起位置<br>看到绿色“双击已收到”，表示浏览器触发了 dblclick</small></div></div>
+    <section class="card"><div id="summary" class="summary">等待点击。建议先用鼠标双击作为对照，再用触摸屏双击。</div>
+      <dl><dt>最近事件</dt><dd id="lastEvent">—</dd><dt>浏览器点击次数</dt><dd id="detail">—</dd><dt>两次 click 间隔</dt><dd id="gap">—</dd><dt>两次落点偏移</dt><dd id="distance">—</dd><dt>期间 mousemove</dt><dd id="moves">—</dd><dt>最近屏幕坐标</dt><dd id="screenPoint">—</dd></dl>
+      <div class="notice">“点击次数”是浏览器收到的 event.detail，不是驱动发送前的值。坐标单位为 CSS 像素；不能直接当作设备物理像素。isTrusted 也不能用来区分手指、物理鼠标和驱动合成的系统输入。</div>
+    </section>
+  </div>
+  <section class="log"><div class="log-head"><strong>接收事件 · 新的在前</strong><label><input id="showMoves" type="checkbox"> 显示移动与 pointer 事件</label></div><div class="table-wrap"><table><thead><tr><th>序号</th><th>本地时间 / 驱动时间</th><th>事件</th><th>detail</th><th>窗口坐标</th><th>屏幕坐标</th><th>间隔 / 偏移</th></tr></thead><tbody id="rows"></tbody></table><div id="empty">尚无事件</div></div></section>
+  <div id="status" role="status"></div>
+  <div class="notice">日志仅保存在本页内存中，无联网上传。完整导出包含原始鼠标 / pointer 事件、点击期间的移动及页面焦点变化；表格只显示最近 160 条。最多保留 20,000 条，超出时会明确提示。</div>
+</main>
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const target = $('target'), limit = 20000;
+  let events = [], sequence = 0, dropped = 0, active = false, lastClick = null, moveCount = 0, movePath = 0, lastMove = null, pending = false;
+  let counts = {mousedown:0, mouseup:0, click:0, dblclick:0};
+  const environment = () => ({userAgent:navigator.userAgent,devicePixelRatio:devicePixelRatio,viewport:{width:innerWidth,height:innerHeight},window:{x:window.screenX,y:window.screenY},timeOrigin:performance.timeOrigin});
+  const isMouseMove = type => type === 'mousemove';
+  const isAuxiliary = type => type.includes('move') || type.startsWith('pointer');
+  function drawDot(e) {
+    const rect = target.getBoundingClientRect(), dot = document.createElement('span');
+    dot.className = 'dot' + (e.type === 'mouseup' ? ' up' : '');
+    dot.style.left = (e.clientX - rect.left) + 'px'; dot.style.top = (e.clientY - rect.top) + 'px';
+    target.appendChild(dot);
+    const dots = target.querySelectorAll('.dot');
+    if (dots.length > 12) dots[0].remove();
+  }
+  function append(row) {
+    const wall=new Date(row.iso);
+    row.localTime=wall.toLocaleTimeString('zh-CN',{hour12:false})+'.'+String(wall.getMilliseconds()).padStart(3,'0');
+    row.driverClock=(wall.getTime()/1000%10000).toFixed(3);
+    events.push(row);
+    if (events.length > limit) {events.splice(0, events.length - limit); dropped++;}
+    scheduleRender();
+  }
+  function receive(e) {
+    const inside = e.target instanceof Element && !!e.target.closest('[data-test-area]');
+    if (!inside && !active) return;
+    if (e.type === 'pointerdown' || e.type === 'mousedown') active = true;
+    const now = performance.now();
+    const row = {id:++sequence,type:e.type,iso:new Date().toISOString(),receivedAt:now,eventTimeStamp:e.timeStamp,
+      clientX:e.clientX,clientY:e.clientY,screenX:e.screenX,screenY:e.screenY,movementX:e.movementX,movementY:e.movementY,
+      detail:e.detail,button:e.button,buttons:e.buttons,isTrusted:e.isTrusted,pointerType:e.pointerType ?? null,
+      pointerId:e.pointerId ?? null,pressure:e.pressure ?? null,altKey:e.altKey,ctrlKey:e.ctrlKey,metaKey:e.metaKey,shiftKey:e.shiftKey,
+      target:e.target instanceof Element ? (e.target.id || e.target.tagName) : null,inside};
+    if (isMouseMove(e.type)) {
+      if (lastClick) {
+        moveCount++;
+        const prior = lastMove || lastClick;
+        movePath += Math.hypot(e.clientX - prior.clientX, e.clientY - prior.clientY);
+      }
+      lastMove = {clientX:e.clientX,clientY:e.clientY};
+    }
+    if (e.type in counts) counts[e.type]++;
+    if (e.type === 'click') {
+      if (lastClick) {
+        row.previousClickIntervalMs = now - lastClick.receivedAt;
+        row.previousClickDistanceCss = Math.hypot(e.clientX-lastClick.clientX,e.clientY-lastClick.clientY);
+        row.mousemovesSincePreviousClick = moveCount;
+        row.mousemovePathSincePreviousClickCss = movePath;
+        $('gap').textContent = row.previousClickIntervalMs.toFixed(1) + ' ms';
+        $('distance').textContent = row.previousClickDistanceCss.toFixed(2) + ' CSS px';
+        $('moves').textContent = moveCount + ' 次 · 路径 ' + movePath.toFixed(2) + ' CSS px';
+      }
+      lastClick = row; moveCount = 0; movePath = 0; lastMove = null;
+      $('summary').textContent = 'click 已收到，detail=' + e.detail + '。等待浏览器是否继续发出 dblclick。';
+      $('summary').classList.remove('success');
+    }
+    if (e.type === 'dblclick') {
+      $('summary').textContent = '双击已收到 ✓　浏览器 dblclick · detail=' + e.detail;
+      $('summary').classList.add('success');
+    }
+    if (!isAuxiliary(e.type)) {
+      $('lastEvent').textContent = e.type;
+      $('detail').textContent = String(e.detail);
+      $('screenPoint').textContent = e.screenX + ', ' + e.screenY;
+    }
+    if (e.type === 'mousedown' || e.type === 'mouseup') drawDot(e);
+    append(row);
+    if (e.type === 'mouseup' || e.type === 'pointercancel') active = false;
+  }
+  // Store every input immediately, but avoid rebuilding a table per mouse move.
+  function scheduleRender() {if (!pending) {pending=true;setTimeout(render,100);}}
+  function render() {
+    pending=false;
+    for (const [type,id] of Object.entries({mousedown:'downCount',mouseup:'upCount',click:'clickCount',dblclick:'doubleCount'})) $(id).textContent=counts[type];
+    const visible=[];
+    for (let i=events.length-1;i>=0 && visible.length<160;i--) if ($('showMoves').checked || !isAuxiliary(events[i].type)) visible.push(events[i]);
+    const fragment=document.createDocumentFragment();
+    for (const row of visible) {
+      const tr=document.createElement('tr');tr.className=row.type==='dblclick'?'double':isAuxiliary(row.type)?'move':'';
+      const values=[row.id,row.localTime+' / '+row.driverClock,row.type,row.detail ?? '—',row.clientX===undefined?'—':row.clientX+', '+row.clientY,row.screenX===undefined?'—':row.screenX+', '+row.screenY,row.previousClickIntervalMs===undefined?'—':row.previousClickIntervalMs.toFixed(1)+'ms / '+row.previousClickDistanceCss.toFixed(2)+'px'];
+      for (const value of values) {const td=document.createElement('td');td.textContent=String(value);tr.appendChild(td);}
+      fragment.appendChild(tr);
+    }
+    $('rows').replaceChildren(fragment);$('empty').hidden=events.length>0;
+    if (dropped) $('status').textContent='已超过记录上限，丢弃最早 '+dropped+' 条；建议清空后重新复现。';
+  }
+  const types=['pointerdown','pointerup','pointermove','pointercancel','mousedown','mouseup','mousemove','click','dblclick','contextmenu'];
+  types.forEach(type=>document.addEventListener(type,receive,{capture:true,passive:true}));
+  for (const type of ['focus','blur']) window.addEventListener(type,()=>append({id:++sequence,type,iso:new Date().toISOString(),receivedAt:performance.now()}));
+  document.addEventListener('visibilitychange',()=>append({id:++sequence,type:'visibilitychange',visibility:document.visibilityState,iso:new Date().toISOString(),receivedAt:performance.now()}));
+  $('showMoves').addEventListener('change',scheduleRender);
+  const output=()=>JSON.stringify({format:'macintouch-click-diagnostics-v1',exportedAt:new Date().toISOString(),environment:environment(),counts,dropped,events},null,2);
+  $('clear').addEventListener('click',()=>{
+    events=[];sequence=0;dropped=0;active=false;lastClick=null;moveCount=0;movePath=0;lastMove=null;
+    counts={mousedown:0,mouseup:0,click:0,dblclick:0};target.querySelectorAll('.dot').forEach(dot=>dot.remove());
+    $('summary').textContent='已清空。可以开始新一轮测试。';$('summary').classList.remove('success');
+    for (const id of ['lastEvent','detail','gap','distance','moves','screenPoint']) $(id).textContent='—';
+    $('status').textContent='';scheduleRender();
+  });
+  $('copy').addEventListener('click',async()=>{
+    const text=output();
+    try {await navigator.clipboard.writeText(text);$('status').textContent='完整日志已复制，可以直接粘贴给我。';}
+    catch {const box=document.createElement('textarea');box.value=text;document.body.appendChild(box);box.select();const ok=document.execCommand('copy');box.remove();$('status').textContent=ok?'日志已复制。':'复制不可用，请使用“下载日志 JSON”。';}
+  });
+  $('download').addEventListener('click',()=>{
+    const url=URL.createObjectURL(new Blob([output()],{type:'application/json'})),a=document.createElement('a');
+    a.href=url;a.download='macintouch-clicks-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    $('status').textContent='已导出完整日志。';
+  });
+  window.macinTouchClickDiagnostics={snapshot:()=>JSON.parse(output())};
+  render();
+})();
+</script>
+</html>

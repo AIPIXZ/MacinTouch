@@ -1,0 +1,369 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A1000001000000000000001 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000001 /* main.swift */; };
+		A1000001000000000000002 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000002 /* Config.swift */; };
+		A1000001000000000000003 /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000003 /* Structs.swift */; };
+		A1000001000000000000004 /* TouchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000004 /* TouchHandler.swift */; };
+		A1000001000000000000005 /* InputSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000005 /* InputSimulator.swift */; };
+		A1000001000000000000009 /* DisplayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000009 /* DisplayManager.swift */; };
+		A1000001000000000000006 /* HIDSetup.c in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000006 /* HIDSetup.c */; };
+		A100000100000000000000A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000200000000000000A /* Logger.swift */; };
+		A100000100000000000000B /* DriverConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000200000000000000B /* DriverConfig.swift */; };
+		A100000100000000000000C /* GestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000200000000000000C /* GestureRecognizer.swift */; };
+		A100000100000000000000D /* GestureStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000200000000000000D /* GestureStateMachine.swift */; };
+		A100000100000000000000E /* SingleTouchGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000200000000000000E /* SingleTouchGesture.swift */; };
+		A100000100000000000000F /* ScrollGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000200000000000000F /* ScrollGesture.swift */; };
+		A1000001000000000000010 /* PinchGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000010 /* PinchGesture.swift */; };
+		A1000001000000000000011 /* TwoFingerDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000011 /* TwoFingerDetector.swift */; };
+		A1000001000000000000012 /* FourFingerGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000012 /* FourFingerGesture.swift */; };
+		A1000001000000000000013 /* MacinTouchInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000013 /* MacinTouchInterface.swift */; };
+		A1000001000000000000014 /* SingleFingerScrollGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000014 /* SingleFingerScrollGesture.swift */; };
+		B1000001000000000000001 /* DockSwipe.c in Sources */ = {isa = PBXBuildFile; fileRef = B1000002000000000000001 /* DockSwipe.c */; };
+		B1000001000000000000003 /* MultiFingerRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000002000000000000003 /* MultiFingerRecognition.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A1000002000000000000001 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		A1000002000000000000002 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		A1000002000000000000003 /* Structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
+		A1000002000000000000004 /* TouchHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchHandler.swift; sourceTree = "<group>"; };
+		A1000002000000000000005 /* InputSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSimulator.swift; sourceTree = "<group>"; };
+		A1000002000000000000009 /* DisplayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayManager.swift; sourceTree = "<group>"; };
+		A1000002000000000000006 /* HIDSetup.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HIDSetup.c; sourceTree = "<group>"; };
+		A1000002000000000000007 /* HIDSetup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDSetup.h; sourceTree = "<group>"; };
+		A1000002000000000000008 /* TouchDriver-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MacinTouch-Bridging-Header.h"; sourceTree = "<group>"; };
+		A100000200000000000000A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		A100000200000000000000B /* DriverConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverConfig.swift; sourceTree = "<group>"; };
+		A100000200000000000000C /* GestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureRecognizer.swift; sourceTree = "<group>"; };
+		A100000200000000000000D /* GestureStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureStateMachine.swift; sourceTree = "<group>"; };
+		A100000200000000000000E /* SingleTouchGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTouchGesture.swift; sourceTree = "<group>"; };
+		A100000200000000000000F /* ScrollGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollGesture.swift; sourceTree = "<group>"; };
+		A1000002000000000000010 /* PinchGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchGesture.swift; sourceTree = "<group>"; };
+		A1000002000000000000011 /* TwoFingerDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFingerDetector.swift; sourceTree = "<group>"; };
+		A1000002000000000000012 /* FourFingerGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourFingerGesture.swift; sourceTree = "<group>"; };
+		A1000002000000000000013 /* MacinTouchInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacinTouchInterface.swift; sourceTree = "<group>"; };
+		A1000002000000000000014 /* SingleFingerScrollGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleFingerScrollGesture.swift; sourceTree = "<group>"; };
+		A1000003000000000000001 /* MacinTouch */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MacinTouch; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1000002000000000000001 /* DockSwipe.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = DockSwipe.c; sourceTree = "<group>"; };
+		B1000002000000000000002 /* DockSwipe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DockSwipe.h; sourceTree = "<group>"; };
+		B1000002000000000000003 /* MultiFingerRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiFingerRecognition.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A1000004000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A1000005000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				A1000005000000000000002 /* MacinTouch */,
+				A1000005000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A1000005000000000000002 /* MacinTouch */ = {
+			isa = PBXGroup;
+			children = (
+				A1000002000000000000001 /* main.swift */,
+				A1000002000000000000002 /* Config.swift */,
+				A1000002000000000000003 /* Structs.swift */,
+				A1000002000000000000004 /* TouchHandler.swift */,
+				A1000002000000000000005 /* InputSimulator.swift */,
+				A1000002000000000000009 /* DisplayManager.swift */,
+				A1000002000000000000006 /* HIDSetup.c */,
+				B1000002000000000000001 /* DockSwipe.c */,
+				B1000002000000000000002 /* DockSwipe.h */,
+				A1000002000000000000007 /* HIDSetup.h */,
+				A1000002000000000000008 /* TouchDriver-Bridging-Header.h */,
+				A100000200000000000000A /* Logger.swift */,
+				A100000200000000000000B /* DriverConfig.swift */,
+				A1000002000000000000013 /* MacinTouchInterface.swift */,
+				A1000005000000000000004 /* Gestures */,
+			);
+			path = MacinTouch;
+			sourceTree = "<group>";
+		};
+		A1000005000000000000004 /* Gestures */ = {
+			isa = PBXGroup;
+			children = (
+				A100000200000000000000C /* GestureRecognizer.swift */,
+				A100000200000000000000D /* GestureStateMachine.swift */,
+				A100000200000000000000E /* SingleTouchGesture.swift */,
+				A100000200000000000000F /* ScrollGesture.swift */,
+				A1000002000000000000010 /* PinchGesture.swift */,
+				A1000002000000000000011 /* TwoFingerDetector.swift */,
+				A1000002000000000000012 /* FourFingerGesture.swift */,
+				B1000002000000000000003 /* MultiFingerRecognition.swift */,
+				A1000002000000000000014 /* SingleFingerScrollGesture.swift */,
+			);
+			path = Gestures;
+			sourceTree = "<group>";
+		};
+		A1000005000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1000003000000000000001 /* MacinTouch */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A1000006000000000000001 /* MacinTouch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1000007000000000000001 /* Build configuration list for PBXNativeTarget "TouchDriver" */;
+			buildPhases = (
+				A1000008000000000000001 /* Sources */,
+				A1000004000000000000001 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MacinTouch;
+			productName = MacinTouch;
+			productReference = A1000003000000000000001 /* MacinTouch */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A1000009000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					A1000006000000000000001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = A1000010000000000000001 /* Build configuration list for PBXProject "MacinTouch" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A1000005000000000000001;
+			productRefGroup = A1000005000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A1000006000000000000001 /* MacinTouch */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A1000008000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000001000000000000001 /* main.swift in Sources */,
+				A1000001000000000000002 /* Config.swift in Sources */,
+				A1000001000000000000003 /* Structs.swift in Sources */,
+				A1000001000000000000004 /* TouchHandler.swift in Sources */,
+				A1000001000000000000005 /* InputSimulator.swift in Sources */,
+				A1000001000000000000009 /* DisplayManager.swift in Sources */,
+				A1000001000000000000006 /* HIDSetup.c in Sources */,
+				B1000001000000000000001 /* DockSwipe.c in Sources */,
+				A100000100000000000000A /* Logger.swift in Sources */,
+				A100000100000000000000B /* DriverConfig.swift in Sources */,
+				A100000100000000000000C /* GestureRecognizer.swift in Sources */,
+				A100000100000000000000D /* GestureStateMachine.swift in Sources */,
+				A100000100000000000000E /* SingleTouchGesture.swift in Sources */,
+				A100000100000000000000F /* ScrollGesture.swift in Sources */,
+				A1000001000000000000010 /* PinchGesture.swift in Sources */,
+				A1000001000000000000011 /* TwoFingerDetector.swift in Sources */,
+				A1000001000000000000012 /* FourFingerGesture.swift in Sources */,
+				B1000001000000000000003 /* MultiFingerRecognition.swift in Sources */,
+				A1000001000000000000013 /* MacinTouchInterface.swift in Sources */,
+				A1000001000000000000014 /* SingleFingerScrollGesture.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A1000011000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A1000011000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		A1000012000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MacinTouch/MacinTouch-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A1000012000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MacinTouch/MacinTouch-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A1000007000000000000001 /* Build configuration list for PBXNativeTarget "TouchDriver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1000012000000000000001 /* Debug */,
+				A1000012000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1000010000000000000001 /* Build configuration list for PBXProject "MacinTouch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1000011000000000000001 /* Debug */,
+				A1000011000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A1000009000000000000001 /* Project object */;
+}

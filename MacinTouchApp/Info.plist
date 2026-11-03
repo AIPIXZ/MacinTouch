@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleIdentifier</key>
+    <string>com.macintouch.driver</string>
+    <key>CFBundleName</key>
+    <string>MacinTouch</string>
+    <key>CFBundleDisplayName</key>
+    <string>MacinTouch</string>
+    <key>CFBundleVersion</key>
+    <string>1.0.0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.0</string>
+    <key>CFBundleExecutable</key>
+    <string>MacinTouch</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
+    
+    <!-- Minimum macOS version -->
+    <key>LSMinimumSystemVersion</key>
+    <string>13.0</string>
+    
+    <!-- Menu bar app configuration -->
+    <key>LSUIElement</key>
+    <true/>
+    
+    <!-- Required permissions -->
+    <key>NSPrivacyAccessibilityUsageDescription</key>
+    <string>MacinTouch needs accessibility permissions to simulate mouse clicks and gestures from the touchscreen.</string>
+    
+    <!-- App category -->
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.utilities</string>
+    
+    <!-- High resolution capable -->
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    
+    <!-- Supported document types (none) -->
+    <key>CFBundleDocumentTypes</key>
+    <array/>
+    
+    <!-- URL schemes (none) -->
+    <key>CFBundleURLTypes</key>
+    <array/>
+</dict>
+</plist>
